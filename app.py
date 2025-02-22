@@ -153,7 +153,7 @@ def predict():
         X = scaler.fit_transform(X)
 
         print(X)
-        # predictions = model.predict(X[0][0])
+        predictions = model.predict(X[0])
         # data = np.array(X)    
     
 
@@ -171,7 +171,7 @@ def predict():
 
       
 
-        return jsonify({"predictions":'hello'}) 
+        return jsonify({"predictions":predictions}) 
 
     except Exception as e:
         return jsonify({"error":str(e)})
