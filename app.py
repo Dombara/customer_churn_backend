@@ -135,19 +135,42 @@ def predict():
         data=pd.read_csv(request.files['file'])
         # data=np.array(data)
 
-         
+
+        X = data.iloc[:, 3:-1].values
+        # dataset = pd.read_csv('p111.csv')
+        # y = dataset.iloc[:, -1].values
+        from sklearn.preprocessing import LabelEncoder
+        le = LabelEncoder()
+        X[:, 2] = le.fit_transform(X[:, 2])
         
+        from sklearn.compose import ColumnTransformer
+        from sklearn.preprocessing import OneHotEncoder
+        ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
+        X = np.array(ct.fit_transform(X))
+         
+        from sklearn.preprocessing import StandardScaler
+        sc = StandardScaler()
+        X = sc.fit_transform(X)
 
-        features=[ data["CreditScore"], data["Geography"], data["Gender"], data["Age"], data["Tenure"], data["Balance"], data["NumOfProducts"], data["HasCrCard"], data["IsActiveMember"],data["EstimatedSalary"]]
+        predictions = model.predict(X[0][0])
+        # data = np.array(X)    
+    
 
-        features=np.array(features).reshape(1,-1)
-        features[:,2]=label_encoder.transform(features[:,2])
-        features=onehot_encoder.transform(features).toarray()
-        features=scaler.transform(features)
+
+
+
+
+
+        # features=[ data["CreditScore"], data["Geography"], data["Gender"], data["Age"], data["Tenure"], data["Balance"], data["NumOfProducts"], data["HasCrCard"], data["IsActiveMember"],data["EstimatedSalary"]]
+
+        # features=np.array(features).reshape(1,-1)
+        # features[:,2]=label_encoder.transform(features[:,2])
+        # features=onehot_encoder.transform(features).toarray()
+        # features=scaler.transform(features)
 
       
 
-        return jsonify({"predictions":predict_results}) 
+        return jsonify({"predictions":predictions}) 
 
     except Exception as e:
         return jsonify({"error":str(e)})
