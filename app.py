@@ -171,7 +171,7 @@ def predict():
 
       
 
-        return jsonify({"predictions":X}) 
+        return jsonify({"predictions":'hello'}) 
 
     except Exception as e:
         return jsonify({"error":str(e)})
