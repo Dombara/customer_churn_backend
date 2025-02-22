@@ -152,10 +152,10 @@ def predict():
         # sc = StandardScaler()
         X = scaler.fit_transform(X)
 
-        print(X)
-        predictions = model.predict(X[0])
-        # data = np.array(X)    
-    
+        print(X[0])
+        X = np.array(X[0])    
+        predictions = model.predict(X)
+        print(predictions)
 
 
 
