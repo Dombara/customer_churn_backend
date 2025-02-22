@@ -153,6 +153,7 @@ def predict():
         X = sc.fit_transform(X)
 
         predictions = model.predict(X[0][0])
+        print(predictions)
         # data = np.array(X)    
     
 
