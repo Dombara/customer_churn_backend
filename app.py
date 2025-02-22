@@ -59,7 +59,7 @@ def home():
 
 
 
-scalar=joblib.load('scaler.pkl')
+scaler=joblib.load('scaler.pkl')
 onehot_encoder=joblib.load('onehot_encoder.pkl')
 label_encoder=joblib.load('label_encoder.pkl')
 
@@ -141,9 +141,9 @@ def predict():
         features=[ data["CreditScore"], data["Geography"], data["Gender"], data["Age"], data["Tenure"], data["Balance"], data["NumOfProducts"], data["HasCrCard"], data["IsActiveMember"],data["EstimatedSalary"]]
 
         features=np.array(features).reshape(1,-1)
-        features[:,2]=label_encoder.transform(features[:,2])
+        # features[:,2]=label_encoder.transform(features[:,2])
         features=onehot_encoder.transform(features).toarray()
-        features=scalar.transform(features)
+        features=scaler.transform(features)
 
       
 
