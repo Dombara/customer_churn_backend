@@ -80,6 +80,7 @@ def upload_file():
     # print(request.files)
     f=pd.read_csv(request.files['file'])
     f=np.array(f)
+    
     print(f[0][0])
 
     # print("Message")
@@ -148,6 +149,7 @@ def predict():
         
         # ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
         X = np.array(onehot_encoder.fit_transform(X))
+        X = np.expand_dims(X, axis=0)
          
         # sc = StandardScaler()
         X = scaler.fit_transform(X)
