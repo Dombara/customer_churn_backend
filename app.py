@@ -149,11 +149,11 @@ def predict():
         
         # ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
         X = np.array(onehot_encoder.fit_transform(X))
-        X = np.expand_dims(X, axis=0)
          
         # sc = StandardScaler()
         X = scaler.fit_transform(X)
 
+        X = np.expand_dims(X, axis=0)
         print(X[0])
         X = np.array(X[0])    
         predictions = model.predict(X)
