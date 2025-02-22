@@ -1,3 +1,7 @@
+from sklearn.preprocessing import LabelEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
 import os
 from flask import Flask,jsonify,request
 import numpy as np
@@ -139,21 +143,17 @@ def predict():
         X = data.iloc[:, 3:-1].values
         # dataset = pd.read_csv('p111.csv')
         # y = dataset.iloc[:, -1].values
-        from sklearn.preprocessing import LabelEncoder
-        le = LabelEncoder()
-        X[:, 2] = le.fit_transform(X[:, 2])
+        # le = LabelEncoder()
+        X[:, 2] = label_encoder.fit_transform(X[:, 2])
         
-        from sklearn.compose import ColumnTransformer
-        from sklearn.preprocessing import OneHotEncoder
-        ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
-        X = np.array(ct.fit_transform(X))
+        # ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
+        X = np.array(onehot_encoder.fit_transform(X))
          
-        from sklearn.preprocessing import StandardScaler
-        sc = StandardScaler()
-        X = sc.fit_transform(X)
+        # sc = StandardScaler()
+        X = scaler.fit_transform(X)
 
-        # predictions = model.predict(X[0][0])
         print(X)
+        # predictions = model.predict(X[0][0])
         # data = np.array(X)    
     
 
@@ -171,7 +171,7 @@ def predict():
 
       
 
-        return jsonify({"predictions":predictions}) 
+        return jsonify({"predictions":X}) 
 
     except Exception as e:
         return jsonify({"error":str(e)})
